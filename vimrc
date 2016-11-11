@@ -19,11 +19,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-repeat'
   Plug 'scrooloose/nerdcommenter'
   Plug 'honza/vim-snippets'
-  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'yggdroot/indentline'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'ervandew/supertab'
   Plug 'junegunn/fzf'
   Plug 'rking/ag.vim'
+  Plug 'ap/vim-css-color'
+  Plug 'osyo-manga/vim-over'
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
