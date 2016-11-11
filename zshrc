@@ -83,17 +83,19 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vim="nvim"
+
 alias dcu="docker-compose up"
 alias dcs="docker-compose stop"
 
 alias sites="cd ~/Sites/"
 alias documents="cd ~/Documents/"
 alias downloads="cd ~/Downloads/"
-alias dotfiles="cd ~/Dotfiles/"
 alias desktop="cd ~/Desktop/"
 
 alias core="cd ~/Projects/gwi/core"
 alias pro="cd ~/Projects/gwi/pro"
+alias dotfiles="cd ~/Projects/dotfiles"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
