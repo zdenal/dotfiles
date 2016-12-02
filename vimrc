@@ -20,17 +20,19 @@ call plug#begin('~/.vim/plugged')
   Plug 'scrooloose/nerdcommenter'
   Plug 'honza/vim-snippets'
   Plug 'yggdroot/indentline'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'ervandew/supertab'
   Plug 'junegunn/fzf'
   Plug 'rking/ag.vim'
   Plug 'ap/vim-css-color'
   Plug 'osyo-manga/vim-over'
+  Plug 'kassio/neoterm'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-endwise'
+  Plug 'matchit.zip'
+  Plug 'easymotion/vim-easymotion'
 call plug#end()
 
-let g:deoplete#enable_at_startup = 1
-
-set rtp+=/usr/local/opt/fzf
+"let g:deoplete#enable_at_startup = 1
 
 " Leader
 let mapleader = ","
@@ -39,12 +41,16 @@ if has('vim_starting') && !has('nvim') && &compatible
   set nocompatible               " Be iMproved
 endif
 
+"set relativenumber
 set number            " Show line numbers
 set ruler             " Show line and column number
 syntax enable         " Turn on syntax highlighting allowing local overrides
 
+set ttyfast
+set lazyredraw
+set regexpengine=1
 set cursorline              " Highlight current line
-set title                   " Show the filename in the window title bar.
+"set title                   " Show the filename in the window title bar.
 
 set scrolloff=5             " Start scrolling n lines before horizontal border of window.
 set sidescrolloff=7         " Start scrolling n chars before end of screen.
@@ -75,9 +81,9 @@ set listchars=""                  " Reset the listchars
 set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
 set listchars+=trail:.            " show trailing spaces as dots
 set listchars+=extends:>          " The character to show in the last column when wrap is
-                                  " off and the line continues beyond the right of the screen
+                                   "off and the line continues beyond the right of the screen
 set listchars+=precedes:<         " The character to show in the last column when wrap is
-                                  " off and the line continues beyond the left of the screen
+                                   "off and the line continues beyond the left of the screen
 
 ""
 "" Searching
@@ -140,6 +146,8 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$|bower_components|node_modules',
   \ 'file': '\.pyc$\|\.pyo$\|\.rbc$|\.rbo$\|\.class$\|\.o$\|\~$\',
   \ }
+ "ignore from .gitignore
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --column
@@ -147,8 +155,6 @@ if executable('ag')
   command! -nargs=+ -bang Ag silent! grep <args> | redraw! | botright copen
 endif
 
- " Theme
-syntax enable
 " for vim 7
 set t_Co=256
 
@@ -158,3 +164,34 @@ if (has("termguicolors"))
 endif
 
 colorscheme monokai
+
+" Window split settings
+"highlight TermCursor ctermfg=red guifg=red
+set splitbelow
+set splitright
+
+" Terminal settings
+"tnoremap <Leader><ESC> <C-\><C-n>
+
+" Window navigation function
+" Make ctrl-h/j/k/l move between windows and auto-insert in terminals
+"func! s:mapMoveToWindowInDirection(direction)
+    "func! s:maybeInsertMode(direction)
+        "stopinsert
+        "execute "wincmd" a:direction
+
+        "if &buftype == 'terminal'
+            "startinsert!
+        "endif
+    "endfunc
+
+    "execute "tnoremap" "<silent>" "<C-" . a:direction . ">"
+                "\ "<C-\\><C-n>"
+                "\ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+    "execute "nnoremap" "<silent>" "<C-" . a:direction . ">"
+                "\ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+"endfunc
+"for dir in ["h", "j", "l", "k"]
+    "call s:mapMoveToWindowInDirection(dir)
+"endfor
+"
