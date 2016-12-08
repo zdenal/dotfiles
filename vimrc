@@ -24,7 +24,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf'
   Plug 'rking/ag.vim'
   Plug 'ap/vim-css-color'
-  Plug 'osyo-manga/vim-over'
   Plug 'kassio/neoterm'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-endwise'
@@ -167,8 +166,9 @@ colorscheme monokai
 
 " Window split settings
 "highlight TermCursor ctermfg=red guifg=red
-set splitbelow
-set splitright
+"set splitbelow
+"set splitright
+set inccommand=split
 
 " Terminal settings
 "tnoremap <Leader><ESC> <C-\><C-n>
