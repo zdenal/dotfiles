@@ -4,7 +4,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'leafgarland/typescript-vim'
   Plug 'romgrk/winteract.vim'
   Plug 'kien/ctrlp.vim'
-  Plug 'honza/vim-snippets'
   Plug 'terryma/vim-multiple-cursors'
   Plug 'bronson/vim-trailing-whitespace'
   Plug 'jeetsukumaran/vim-buffergator'
@@ -18,7 +17,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'konfekt/fastfold'
   Plug 'tpope/vim-repeat'
   Plug 'scrooloose/nerdcommenter'
-  Plug 'honza/vim-snippets'
   Plug 'yggdroot/indentline'
   Plug 'ervandew/supertab'
   Plug 'junegunn/fzf'
@@ -29,9 +27,19 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-endwise'
   Plug 'matchit.zip'
   Plug 'easymotion/vim-easymotion'
+  Plug 'matze/vim-move'
+  Plug 'dhruvasagar/vim-table-mode'
+  Plug 'honza/vim-snippets'
+  Plug 'marcweber/vim-addon-mw-utils'
+  Plug 'tomtom/tlib_vim'
+  Plug 'garbas/vim-snipmate'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
 "let g:deoplete#enable_at_startup = 1
+let g:move_key_modifier = 'C'
+
+let g:deoplete#enable_at_startup = 1
 
 " Leader
 let mapleader = ","
@@ -169,29 +177,30 @@ colorscheme monokai
 "set splitbelow
 "set splitright
 set inccommand=split
+set clipboard+=unnamedplus
 
 " Terminal settings
-"tnoremap <Leader><ESC> <C-\><C-n>
+tnoremap <Leader><ESC> <C-\><C-n>
 
 " Window navigation function
 " Make ctrl-h/j/k/l move between windows and auto-insert in terminals
-"func! s:mapMoveToWindowInDirection(direction)
-    "func! s:maybeInsertMode(direction)
-        "stopinsert
-        "execute "wincmd" a:direction
+func! s:mapMoveToWindowInDirection(direction)
+    func! s:maybeInsertMode(direction)
+        stopinsert
+        execute "wincmd" a:direction
 
-        "if &buftype == 'terminal'
-            "startinsert!
-        "endif
-    "endfunc
+        if &buftype == 'terminal'
+            startinsert!
+        endif
+    endfunc
 
-    "execute "tnoremap" "<silent>" "<C-" . a:direction . ">"
-                "\ "<C-\\><C-n>"
-                "\ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
-    "execute "nnoremap" "<silent>" "<C-" . a:direction . ">"
-                "\ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
-"endfunc
-"for dir in ["h", "j", "l", "k"]
-    "call s:mapMoveToWindowInDirection(dir)
-"endfor
-"
+    execute "tnoremap" "<silent>" "<C-" . a:direction . ">"
+                \ "<C-\\><C-n>"
+                \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+    execute "nnoremap" "<silent>" "<C-" . a:direction . ">"
+                \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+endfunc
+for dir in ["h", "j", "l", "k"]
+    call s:mapMoveToWindowInDirection(dir)
+endfor
+
