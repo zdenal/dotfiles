@@ -93,11 +93,17 @@ alias documents="cd ~/Documents/"
 alias downloads="cd ~/Downloads/"
 alias desktop="cd ~/Desktop/"
 
+alias projects="cd ~/Projects"
+alias rust="cd ~/Projects/rust"
+alias gwi="cd ~/Projects/gwi"
 alias core="cd ~/Projects/gwi/core"
 alias pro="cd ~/Projects/gwi/pro"
 alias dotfiles="cd ~/Projects/dotfiles"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export EDITOR=nvim
 
 export NVM_DIR="/Users/zdenko/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+source $HOME/.cargo/env
