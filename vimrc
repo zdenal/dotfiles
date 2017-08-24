@@ -34,12 +34,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'tomtom/tlib_vim'
   Plug 'garbas/vim-snipmate'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'rust-lang/rust.vim'
+  Plug 'metakirby5/codi.vim'
 call plug#end()
 
 "let g:deoplete#enable_at_startup = 1
 let g:move_key_modifier = 'C'
 
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 
 " Leader
 let mapleader = ","
@@ -47,6 +49,9 @@ let mapleader = ","
 if has('vim_starting') && !has('nvim') && &compatible
   set nocompatible               " Be iMproved
 endif
+
+set foldmethod=indent
+set foldlevelstart=2
 
 "set relativenumber
 set number            " Show line numbers
@@ -171,6 +176,7 @@ if (has("termguicolors"))
 endif
 
 colorscheme monokai
+hi Search guibg=DarkRed
 
 " Window split settings
 "highlight TermCursor ctermfg=red guifg=red
@@ -204,3 +210,4 @@ for dir in ["h", "j", "l", "k"]
     call s:mapMoveToWindowInDirection(dir)
 endfor
 
+autocmd BufNewFile,BufRead *.thor set syntax=ruby
