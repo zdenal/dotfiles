@@ -36,6 +36,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'rust-lang/rust.vim'
   Plug 'metakirby5/codi.vim'
+  Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 "let g:deoplete#enable_at_startup = 1
