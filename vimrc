@@ -185,6 +185,7 @@ hi Search guibg=DarkRed
 "set splitright
 set inccommand=split
 set clipboard+=unnamedplus
+set clipboard+=unnamed
 
 " Terminal settings
 tnoremap <Leader><ESC> <C-\><C-n>
