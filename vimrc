@@ -36,10 +36,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'rust-lang/rust.vim'
   Plug 'metakirby5/codi.vim'
   Plug 'christoomey/vim-tmux-navigator'
+  Plug 'godlygeek/tabular'
+  Plug 'diepm/vim-rest-console'
+  Plug 'jamshedvesuna/vim-markdown-preview'
 call plug#end()
 
 "let g:deoplete#enable_at_startup = 1
 let g:move_key_modifier = 'C'
+
+let vim_markdown_preview_github=1
+let vim_markdown_preview_toggle=1
+let vim_markdown_preview_browser='Google Chrome'
 
 "let g:deoplete#enable_at_startup = 1
 
