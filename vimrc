@@ -40,6 +40,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'diepm/vim-rest-console'
   Plug 'jamshedvesuna/vim-markdown-preview'
   Plug 'w0rp/ale'
+  Plug 'elixir-editors/vim-elixir'
+  Plug 'slashmili/alchemist.vim'
+  Plug 'amadeus/vim-mjml'
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 call plug#end()
 
 "let g:deoplete#enable_at_startup = 1
@@ -272,3 +276,6 @@ command! -bang -nargs=* Rg
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
