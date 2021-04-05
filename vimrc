@@ -13,7 +13,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'xuyuanp/nerdtree-git-plugin'
   Plug 'sickill/vim-monokai'
   Plug 'christoomey/vim-system-copy'
-  Plug 'tpope/vim-rails'
+  "Plug 'tpope/vim-rails'
   Plug 'konfekt/fastfold'
   Plug 'tpope/vim-repeat'
   Plug 'scrooloose/nerdcommenter'
@@ -39,12 +39,25 @@ call plug#begin('~/.vim/plugged')
   Plug 'godlygeek/tabular'
   Plug 'diepm/vim-rest-console'
   Plug 'jamshedvesuna/vim-markdown-preview'
-  Plug 'w0rp/ale'
+  "Plug 'w0rp/ale'
   Plug 'elixir-editors/vim-elixir'
   Plug 'slashmili/alchemist.vim'
   Plug 'amadeus/vim-mjml'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+  Plug 'mhinz/vim-mix-format'
+  Plug 'slim-template/vim-slim'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'HerringtonDarkholme/yats.vim'
+  Plug 'leafgarland/typescript-vim'
+  Plug 'peitalin/vim-jsx-typescript'
+  Plug 'neovimhaskell/haskell-vim'
+  Plug 'mattn/webapi-vim'
 call plug#end()
+
+"let g:ale_completion_enabled = 1
+let g:ale_linters = {
+       \'javascript': ['eslint', 'flow', 'flow-language-server', 'jscs', 'jshint', 'standard', 'xo']
+\}
 
 "let g:deoplete#enable_at_startup = 1
 let g:move_key_modifier = 'C'
@@ -53,7 +66,9 @@ let vim_markdown_preview_github=1
 let vim_markdown_preview_toggle=1
 let vim_markdown_preview_browser='Google Chrome'
 
-"let g:deoplete#enable_at_startup = 1
+let g:mix_format_on_save = 1
+
+nmap <silent> gi <Plug>(coc-implementation)
 
 " Leader
 let mapleader = ","
@@ -63,7 +78,7 @@ if has('vim_starting') && !has('nvim') && &compatible
 endif
 
 set foldmethod=indent
-set foldlevelstart=2
+set foldlevelstart=20
 
 "set relativenumber
 set number            " Show line numbers
@@ -166,6 +181,14 @@ map <Leader>n :NERDTreeToggle<CR>
 map <Leader>m :CtrlPBuffer<CR>
 map <leader>w :InteractiveWindow<CR>
 set rtp+=/usr/local/opt/fzf
+
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
 let g:ag_working_path_mode="ra"
 let g:ctrlp_custom_ignore = {
@@ -278,4 +301,4 @@ command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml,*.html PrettierAsync
