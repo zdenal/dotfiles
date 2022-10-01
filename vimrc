@@ -31,7 +31,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'honza/vim-snippets'
   Plug 'marcweber/vim-addon-mw-utils'
   Plug 'tomtom/tlib_vim'
-  Plug 'garbas/vim-snipmate'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'rust-lang/rust.vim'
   Plug 'metakirby5/codi.vim'
@@ -40,7 +39,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'diepm/vim-rest-console'
   Plug 'jamshedvesuna/vim-markdown-preview'
   "Plug 'w0rp/ale'
+  "Plug 'dense-analysis/ale'
   Plug 'elixir-editors/vim-elixir'
+  Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
   Plug 'slashmili/alchemist.vim'
   Plug 'amadeus/vim-mjml'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
@@ -52,7 +53,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'peitalin/vim-jsx-typescript'
   Plug 'neovimhaskell/haskell-vim'
   Plug 'mattn/webapi-vim'
+  Plug 'leafOfTree/vim-svelte-plugin'
 call plug#end()
+
+let g:rustfmt_autosave = 1
 
 "let g:ale_completion_enabled = 1
 let g:ale_linters = {
@@ -67,6 +71,8 @@ let vim_markdown_preview_toggle=1
 let vim_markdown_preview_browser='Google Chrome'
 
 let g:mix_format_on_save = 1
+
+let g:vim_svelte_plugin_load_full_syntax = 1
 
 nmap <silent> gi <Plug>(coc-implementation)
 
@@ -220,8 +226,7 @@ hi Search guibg=DarkRed
 "set splitbelow
 "set splitright
 set inccommand=split
-set clipboard+=unnamedplus
-set clipboard+=unnamed
+set clipboard^=unnamed,unnamedplus
 
 " Terminal settings
 tnoremap <Leader><ESC> <C-\><C-n>
@@ -300,5 +305,5 @@ command! -bang -nargs=* Rg
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-let g:prettier#autoformat = 0
+let g:prettier#autoformat = 1
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml,*.html PrettierAsync
