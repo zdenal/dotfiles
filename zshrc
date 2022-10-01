@@ -51,9 +51,11 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git asdf zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
+source /usr/local/opt/asdf/libexec/asdf.sh
+
 
 # User configuration
 
@@ -101,9 +103,21 @@ alias pro="cd ~/Projects/gwi/pro"
 alias dotfiles="cd ~/Projects/dotfiles"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH=$HOME/.utrust-cli/bin:$PATH
 export EDITOR=nvim
+export ASDF_DIR=/usr/local/opt/asdf/libexec
 
-export NVM_DIR="/Users/zdenko/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
 
 source $HOME/.cargo/env
+
+eval "$(direnv hook zsh)"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="/Users/zdenko/elrondsdk:$PATH"	# elrond-sdk
+
+. /usr/local/opt/asdf/libexec/asdf.sh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
