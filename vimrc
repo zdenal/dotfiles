@@ -1,9 +1,9 @@
+"let g:ale_disable_lsp = 1
+
 call plug#begin('~/.vim/plugged')
   Plug 'bling/vim-airline'
   Plug 'scrooloose/syntastic'
-  Plug 'leafgarland/typescript-vim'
   Plug 'romgrk/winteract.vim'
-  Plug 'kien/ctrlp.vim'
   Plug 'terryma/vim-multiple-cursors'
   Plug 'bronson/vim-trailing-whitespace'
   Plug 'jeetsukumaran/vim-buffergator'
@@ -13,7 +13,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'xuyuanp/nerdtree-git-plugin'
   Plug 'sickill/vim-monokai'
   Plug 'christoomey/vim-system-copy'
-  "Plug 'tpope/vim-rails'
   Plug 'konfekt/fastfold'
   Plug 'tpope/vim-repeat'
   Plug 'scrooloose/nerdcommenter'
@@ -22,43 +21,46 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'ap/vim-css-color'
-  Plug 'kassio/neoterm'
   Plug 'tpope/vim-endwise'
   Plug 'vim-scripts/matchit.zip'
   Plug 'easymotion/vim-easymotion'
-  Plug 'matze/vim-move'
-  Plug 'dhruvasagar/vim-table-mode'
-  Plug 'honza/vim-snippets'
-  Plug 'marcweber/vim-addon-mw-utils'
   Plug 'tomtom/tlib_vim'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'rust-lang/rust.vim'
   Plug 'metakirby5/codi.vim'
   Plug 'christoomey/vim-tmux-navigator'
-  Plug 'godlygeek/tabular'
-  Plug 'diepm/vim-rest-console'
   Plug 'jamshedvesuna/vim-markdown-preview'
-  "Plug 'w0rp/ale'
-  "Plug 'dense-analysis/ale'
   Plug 'elixir-editors/vim-elixir'
-  Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
-  Plug 'slashmili/alchemist.vim'
-  Plug 'amadeus/vim-mjml'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-  Plug 'mhinz/vim-mix-format'
-  Plug 'slim-template/vim-slim'
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'HerringtonDarkholme/yats.vim'
-  Plug 'leafgarland/typescript-vim'
-  Plug 'peitalin/vim-jsx-typescript'
   Plug 'neovimhaskell/haskell-vim'
   Plug 'mattn/webapi-vim'
   Plug 'leafOfTree/vim-svelte-plugin'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
+  Plug 'dense-analysis/ale'
+  Plug 'mhinz/vim-mix-format'
+
+  "Plug 'kien/ctrlp.vim'
+  "Plug 'marcweber/vim-addon-mw-utils'
+
+  "Plug 'amadeus/vim-mjml'
+  "Plug 'peitalin/vim-jsx-typescript'
+  "Plug 'leafgarland/typescript-vim'
+  "Plug 'HerringtonDarkholme/yats.vim'
+  "Plug 'godlygeek/tabular'
+  "Plug 'dhruvasagar/vim-table-mode'
+  "Plug 'slashmili/alchemist.vim'
+  "Plug 'slim-template/vim-slim'
+  "Plug 'kassio/neoterm'
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  "Plug 'diepm/vim-rest-console'
+  "Plug 'tpope/vim-rails'
+  "Plug 'honza/vim-snippets'
 call plug#end()
 
 let g:rustfmt_autosave = 1
 
 "let g:ale_completion_enabled = 1
+"let g:ale_completion_autoimport = 0
 let g:ale_linters = {
        \'javascript': ['eslint', 'flow', 'flow-language-server', 'jscs', 'jshint', 'standard', 'xo']
 \}
@@ -144,9 +146,9 @@ set smartcase   " ... unless they contain at least one capital letter
 
 " TODO: Investigate the precise meaning of these settings
 " Wildmenu
-set wildmenu " Show list instead of just completing
+"set wildmenu " Show list instead of just completing
 "set wildmode=list:longest,list:full
-set wildmode=list:longest,full
+"set wildmode=list:longest,full
 set wildignorecase
 set wildchar=<TAB>
 set whichwrap=b,s,h,l,<,>,[,] " Backspace and cursor keys wrap too
@@ -203,6 +205,9 @@ let g:ctrlp_custom_ignore = {
   \ }
  "ignore from .gitignore
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+let g:prettier#autoformat = 1
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml,*.html PrettierAsync
 
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --column
@@ -304,6 +309,3 @@ command! -bang -nargs=* Rg
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-let g:prettier#autoformat = 1
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml,*.html PrettierAsync
