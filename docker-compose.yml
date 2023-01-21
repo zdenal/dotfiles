@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  postgres:
+    command: postgres -c 'max_connections=200'
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    image: postgres:14.5-alpine
+    #image: timescale/timescaledb:latest-pg14
+    ports:
+      - 5432:5432
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    ports:
+      - 6379:6379

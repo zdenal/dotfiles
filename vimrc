@@ -39,7 +39,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'dense-analysis/ale'
   Plug 'mhinz/vim-mix-format'
 
-  "Plug 'kien/ctrlp.vim'
+  Plug 'kien/ctrlp.vim'
   "Plug 'marcweber/vim-addon-mw-utils'
 
   "Plug 'amadeus/vim-mjml'
@@ -230,7 +230,7 @@ hi Search guibg=DarkRed
 "highlight TermCursor ctermfg=red guifg=red
 "set splitbelow
 "set splitright
-set inccommand=split
+"set inccommand=split
 set clipboard^=unnamed,unnamedplus
 
 " Terminal settings
