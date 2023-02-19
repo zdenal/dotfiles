@@ -17,11 +17,13 @@ call plug#begin('~/.vim/plugged2')
   Plug 'tpope/vim-repeat'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  Plug 'windwp/nvim-autopairs'
 
   " Use release branch (recommended)
   " coc-prettier, coc-git, coc-json, coc-elixir, coc-rls, coc-snippets
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
+
 
   "" syntax highligting
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -44,6 +46,7 @@ lua << EOF
 
   -- empty setup using defaults
   require("nvim-tree").setup()
+  require("nvim-autopairs").setup {}
 
   require'nvim-treesitter.configs'.setup {
     highlight = {
