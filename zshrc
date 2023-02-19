@@ -98,7 +98,6 @@ alias projects="cd ~/Projects"
 alias rust="cd ~/Projects/rust"
 alias dotfiles="cd ~/Projects/dotfiles"
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 export PATH=$HOME/.utrust-cli/bin:$PATH
 export EDITOR=nvim
 
@@ -108,6 +107,7 @@ eval "$(direnv hook zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="/Users/zdenko/elrondsdk:$PATH"	# elrond-sdk
+export PATH=$PATH:/Users/zdenko/.zokrates/bin
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
