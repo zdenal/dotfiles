@@ -21,7 +21,8 @@ call plug#begin('~/.vim/plugged2')
   Plug 'windwp/nvim-autopairs'
 
   " Use release branch (recommended)
-  " coc-prettier, coc-git, coc-json, coc-elixir, coc-rls, coc-snippets
+  " coc-prettier, coc-git, coc-json, coc-elixir, coc-rls, coc-snippets,
+  " coc-webview, coc-markdown-preview-enhanced
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 
@@ -83,6 +84,11 @@ set clipboard^=unnamed,unnamedplus
 "" filetype aliases for highlighting
 ""
 autocmd BufEnter *.zok :setlocal filetype=solidity
+
+""
+"" Markdown preview mapping to `,mp`
+""
+nnoremap <silent> <leader>mp :<C-u>CocCommand markdown-preview-enhanced.openPreview<CR>
 
 ""
 "" Whitespace
