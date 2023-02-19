@@ -37,6 +37,12 @@ call plug#begin('~/.vim/plugged2')
 
   "" Theme
   Plug 'patstockwell/vim-monokai-tasty'
+
+  "" Comand prompt and popups
+  Plug 'folke/noice.nvim'
+  Plug 'MunifTanjim/nui.nvim'
+
+  Plug 'aduros/ai.vim'
 call plug#end()
 
 lua << EOF
@@ -49,6 +55,7 @@ lua << EOF
   -- empty setup using defaults
   require("nvim-tree").setup()
   require("nvim-autopairs").setup {}
+  require("noice").setup()
 
   require'nvim-treesitter.configs'.setup {
     highlight = {
