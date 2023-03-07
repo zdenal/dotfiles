@@ -23,6 +23,20 @@ call plug#begin('~/.vim/plugged2')
   " Use release branch (recommended)
   " coc-prettier, coc-git, coc-json, coc-elixir, coc-rls, coc-snippets,
   " coc-webview, coc-markdown-preview-enhanced
+  "
+  " Coc config
+  "
+  " {
+  "  elixir.pathToElixirLS": '~/.elixir-ls/release/language_server.sh',
+  "  coc.preferences.formatOnSaveFiletypes": [
+  "   'css',
+  "   'markdown',
+  "   'elixir',
+  "   'rust'
+  "  ],
+  "  snippets.ultisnips.pythonPrompt": false
+  " }
+
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 
@@ -121,7 +135,9 @@ let g:airline#extensions#tabline#enabled = 1
 "" tree-sitter -- folding options
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable
+set foldlevel=1
+autocmd BufReadPost,FileReadPost * normal zX
+"set nofoldenable
 
 ""
 "" Telescop searching
