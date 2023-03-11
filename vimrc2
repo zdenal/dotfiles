@@ -109,7 +109,7 @@ autocmd BufEnter *.zok :setlocal filetype=solidity
 ""
 "" Markdown preview mapping to `,mp`
 ""
-nnoremap <silent> <leader>mp :<C-u>CocCommand markdown-preview-enhanced.openPreview<CR>
+map <silent> <leader>mp :<C-u>CocCommand markdown-preview-enhanced.openPreview<CR>
 
 ""
 "" Whitespace
