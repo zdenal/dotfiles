@@ -1,6 +1,8 @@
 call plug#begin('~/.vim/plugged2')
   "Plug 'christoomey/vim-tmux-navigator'
 
+  Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
   "" file explorer -- install font `Monaco Nerd Font` from https://github.com/Karmenzind/monaco-nerd-fonts
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-tree/nvim-tree.lua'
@@ -19,30 +21,49 @@ call plug#begin('~/.vim/plugged2')
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'windwp/nvim-autopairs'
+  Plug 'nvim-neotest/neotest'
 
   " Use release branch (recommended)
   " coc-prettier, coc-git, coc-json, coc-elixir, coc-rls, coc-snippets,
-  " coc-webview, coc-markdown-preview-enhanced
+  " coc-webview, coc-markdown-preview-enhanced, coc-snippets
   "
   " Coc config
   "
   " {
-  "  elixir.pathToElixirLS": '~/.elixir-ls/release/language_server.sh',
-  "  coc.preferences.formatOnSaveFiletypes": [
-  "   'css',
-  "   'markdown',
-  "   'elixir',
-  "   'rust'
-  "  ],
-  "  snippets.ultisnips.pythonPrompt": false
+  "   elixir.pathToElixirLS: '~/.elixir-ls/release/language_server.sh',
+  "   coc.preferences.formatOnSave: true,
+  "   coc.preferences.formatOnSaveFiletypes: [
+  "     'css',
+  "     'markdown',
+  "     'elixir',
+  "     'rust',
+  "     'go'
+  "   ],
+  "   snippets.ultisnips.pythonPrompt: false,
+  "   go.goplsOptions: {
+  "     usePlaceholders: true,
+  "     completeUnimported: true,
+  "     hints": {
+  "       parameterNames: true,
+  "       constantValues: true,
+  "       rangeVariableTypes: true
+  "     }
+  "   }
   " }
 
+
+  Plug 'antoinemadec/FixCursorHold.nvim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
+  Plug 'elixir-editors/vim-elixir'
+
+  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+  Plug 'nvim-neotest/neotest-go'
 
 
   "" syntax highligting
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'maxmellon/vim-jsx-pretty'
 
   "" Fuzzy searching
 	Plug 'nvim-lua/plenary.nvim'
@@ -54,6 +75,7 @@ call plug#begin('~/.vim/plugged2')
 
   "" Comand prompt and popups
   Plug 'folke/noice.nvim'
+  Plug 'rcarriga/nvim-notify'
   Plug 'MunifTanjim/nui.nvim'
 
   Plug 'aduros/ai.vim'
@@ -70,6 +92,17 @@ lua << EOF
   require("nvim-tree").setup()
   require("nvim-autopairs").setup {}
   require("noice").setup()
+  require("notify").setup {top_down = false}
+  require("neotest").setup({
+    adapters = {
+      require("neotest-go")({
+        experimental = {
+          test_table = true,
+        },
+        args = { "-count=1", "-timeout=60s" }
+      })
+    }
+  })
 
   require'nvim-treesitter.configs'.setup {
     highlight = {
@@ -105,6 +138,8 @@ set clipboard^=unnamed,unnamedplus
 "" filetype aliases for highlighting
 ""
 autocmd BufEnter *.zok :setlocal filetype=solidity
+autocmd BufEnter *.exs :setlocal filetype=elixir
+autocmd BufEnter *.heex :setlocal filetype=elixir
 
 ""
 "" Markdown preview mapping to `,mp`
@@ -136,8 +171,13 @@ let g:airline#extensions#tabline#enabled = 1
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevel=1
+set foldcolumn=4
 autocmd BufReadPost,FileReadPost * normal zX
 "set nofoldenable
+
+
+let g:go_doc_popup_window = 1
+let g:go_auto_sameids = 1
 
 ""
 "" Telescop searching
@@ -147,6 +187,14 @@ nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+
+" Neotest
+nnoremap <leader>ta <cmd>lua require('neotest').run.attach()<cr>
+nnoremap <leader>ts <cmd>lua require('neotest').summary.toggle()<cr>
+nnoremap <leader>to <cmd>lua require('neotest').output.open({ enter = true })<cr>
+nnoremap <leader>tS <cmd>lua require('neotest').run.stop()<cr>
+nnoremap <leader>tf <cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>
+nnoremap <leader>tn <cmd>lua require('neotest').run.run()<cr>
 
 ""
 "" Coc settings
@@ -188,3 +236,4 @@ endfunction
 
 " Highlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
