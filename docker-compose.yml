@@ -1,17 +1,31 @@
-version: '3.1'
-
+version: "3.8"
 services:
-  postgres:
-    command: postgres -c 'max_connections=200'
+  db:
+    image: postgres:15.3-alpine3.18
+    restart: always
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    image: postgres:14.5-alpine
-    #image: timescale/timescaledb:latest-pg14
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
-      - 5432:5432
-  redis:
-    image: "redis:alpine"
-    container_name: redis
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
     ports:
-      - 6379:6379
+      - 8080:8080
+
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    #environment:
+    #- CLICKHOUSE_USER=clickhouse
+    #- CLICKHOUSE_PASSWORD=clickhouse
+    ports:
+      - "127.0.0.1:8123:8123"
+      - "127.0.0.1:9000:9000"
+
+volumes:
+  db:
+    driver: local
