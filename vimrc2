@@ -13,7 +13,7 @@ call plug#begin('~/.vim/plugged2')
   Plug 'neovim/nvim-lspconfig'
   "commenting with <leadier>ci
   Plug 'scrooloose/nerdcommenter'
-  Plug 'mhartington/formatter.nvim'
+  "Plug 'mhartington/formatter.nvim'
   Plug 'mfussenegger/nvim-lint'
   " surround text - in visual mode press `S` on selected text and press surrounding char
   Plug 'tpope/vim-surround'
@@ -23,33 +23,47 @@ call plug#begin('~/.vim/plugged2')
   Plug 'windwp/nvim-autopairs'
   Plug 'nvim-neotest/neotest'
 
+
   " Use release branch (recommended)
   " coc-prettier, coc-git, coc-json, coc-elixir, coc-rls, coc-snippets,
-  " coc-webview, coc-markdown-preview-enhanced, coc-snippets
+  " coc-webview, coc-markdown-preview-enhanced, coc-go
+  " coc-tsserver
   "
   " Coc config
   "
-  " {
-  "   elixir.pathToElixirLS: '~/.elixir-ls/release/language_server.sh',
-  "   coc.preferences.formatOnSave: true,
-  "   coc.preferences.formatOnSaveFiletypes: [
-  "     'css',
-  "     'markdown',
-  "     'elixir',
-  "     'rust',
-  "     'go'
-  "   ],
-  "   snippets.ultisnips.pythonPrompt: false,
-  "   go.goplsOptions: {
-  "     usePlaceholders: true,
-  "     completeUnimported: true,
-  "     hints": {
-  "       parameterNames: true,
-  "       constantValues: true,
-  "       rangeVariableTypes: true
-  "     }
-  "   }
-  " }
+  "
+  "{
+    "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
+    "coc.preferences.formatOnSave": true,
+    "snippets.ultisnips.pythonPrompt": false,
+    "go.goplsOptions": {
+      "usePlaceholders": true,
+      "completeUnimported": true,
+      "hints": {
+        "assignVariableTypes": true,
+        "compositeLiteralTypes": true,
+        "compositeLiteralFields": true,
+        "functionTypeParameters": true,
+        "parameterNames": true,
+        "constantValues": true,
+        "rangeVariableTypes": true
+      "}
+    "},
+    "rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": true,
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.variableTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true,
+    "javascript.inlayHints.parameterNames.enabled": "all",
+    "javascript.inlayHints.parameterTypes.enabled": true,
+    "javascript.inlayHints.variableTypes.enabled": true,
+    "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "javascript.inlayHints.enumMemberValues.enabled": true
+  "}
+
 
 
   Plug 'antoinemadec/FixCursorHold.nvim'
@@ -57,8 +71,12 @@ call plug#begin('~/.vim/plugged2')
   Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
   Plug 'elixir-editors/vim-elixir'
 
+  "" Golang
   Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
   Plug 'nvim-neotest/neotest-go'
+
+  "" debugging
+  Plug 'puremourning/vimspector'
 
 
   "" syntax highligting
@@ -68,10 +86,11 @@ call plug#begin('~/.vim/plugged2')
   "" Fuzzy searching
 	Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-	Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+	Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.3' }
 
   "" Theme
   Plug 'patstockwell/vim-monokai-tasty'
+  Plug 'ribru17/bamboo.nvim'
 
   "" Comand prompt and popups
   Plug 'folke/noice.nvim'
@@ -159,8 +178,8 @@ set backspace=indent,eol,start    " backspace through everything in insert mode
 ""
 "" Theme
 ""
-let g:vim_monokai_tasty_machine_tint = 1
 colorscheme vim-monokai-tasty
+"colorscheme bamboo
 let g:airline_theme='base16_spacemacs'
 let g:airline#extensions#tabline#enabled = 1
 
@@ -172,12 +191,22 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevel=1
 set foldcolumn=4
+"highlight Folded guifg=ivory3
+highlight Folded guifg=NONE
 autocmd BufReadPost,FileReadPost * normal zX
 "set nofoldenable
 
 
 let g:go_doc_popup_window = 1
 let g:go_auto_sameids = 1
+
+nmap <leader>dd :call vimspector#Launch()<CR>
+nmap <leader>dx :VimspectorReset<CR>
+nmap <leader>de :VimspectorEval
+nmap <leader>dw :VimspectorWatch
+nmap <leader>do :VimspectorShowOutput
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB' ]
+let g:vimspector_enable_mappings = 'HUMAN'
 
 ""
 "" Telescop searching
@@ -222,6 +251,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent><nowait> <space>g <Plug>(coc-codelens-action)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
