@@ -13,7 +13,7 @@ call plug#begin('~/.vim/plugged2')
   Plug 'neovim/nvim-lspconfig'
   "commenting with <leadier>ci
   Plug 'scrooloose/nerdcommenter'
-  "Plug 'mhartington/formatter.nvim'
+  Plug 'mhartington/formatter.nvim'
   Plug 'mfussenegger/nvim-lint'
   " surround text - in visual mode press `S` on selected text and press surrounding char
   Plug 'tpope/vim-surround'
@@ -27,13 +27,13 @@ call plug#begin('~/.vim/plugged2')
   " Use release branch (recommended)
   " coc-prettier, coc-git, coc-json, coc-elixir, coc-rls, coc-snippets,
   " coc-webview, coc-markdown-preview-enhanced, coc-go
-  " coc-tsserver
+  " coc-tsserver, coc-json, coc-rust-analyzer, coc-tailwindcss3
   "
   " Coc config
   "
   "
   "{
-    "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
+    "elixir.pathToElixirLS": '~/.elixir-ls/release/language_server.sh',
     "coc.preferences.formatOnSave": true,
     "snippets.ultisnips.pythonPrompt": false,
     "go.goplsOptions": {
@@ -50,13 +50,13 @@ call plug#begin('~/.vim/plugged2')
       "}
     "},
     "rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": true,
-    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterNames.enabled": 'all',
     "typescript.inlayHints.parameterTypes.enabled": true,
     "typescript.inlayHints.variableTypes.enabled": true,
     "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
     "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
     "typescript.inlayHints.enumMemberValues.enabled": true,
-    "javascript.inlayHints.parameterNames.enabled": "all",
+    "javascript.inlayHints.parameterNames.enabled": 'all',
     "javascript.inlayHints.parameterTypes.enabled": true,
     "javascript.inlayHints.variableTypes.enabled": true,
     "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
@@ -72,7 +72,7 @@ call plug#begin('~/.vim/plugged2')
   Plug 'elixir-editors/vim-elixir'
 
   "" Golang
-  Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+  ""Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
   Plug 'nvim-neotest/neotest-go'
 
   "" debugging
@@ -108,10 +108,11 @@ lua << EOF
   vim.opt.termguicolors = true
 
   -- empty setup using defaults
+  -- require("ibl").setup()
   require("nvim-tree").setup()
   require("nvim-autopairs").setup {}
   require("noice").setup()
-  require("notify").setup {top_down = false}
+  require("notify").setup {top_down = true, stages = "static", timeout=2000, render="compact"}
   require("neotest").setup({
     adapters = {
       require("neotest-go")({
@@ -131,7 +132,7 @@ lua << EOF
       -- Using this option may slow down your editor, and you may see some duplicate highlights.
       -- Instead of true it can also be a list of languages
       additional_vim_regex_highlighting = false,
-    },
+    }
   }
 EOF
 
@@ -172,8 +173,9 @@ set nowrap                        " don't wrap lines
 set tabstop=2                     " a tab is two spaces
 set shiftwidth=2                  " an autoindent (with <<) is two spaces
 set expandtab                     " use spaces, not tabs
-set list                          " Show invisible characters
+"set list                         " Show invisible characters (eg. tabs as '>')
 set backspace=indent,eol,start    " backspace through everything in insert mode
+
 
 ""
 "" Theme
@@ -182,6 +184,8 @@ colorscheme vim-monokai-tasty
 "colorscheme bamboo
 let g:airline_theme='base16_spacemacs'
 let g:airline#extensions#tabline#enabled = 1
+hi CocInlayHint guifg=grey40
+
 
 ""
 "" Treesitter
@@ -191,15 +195,27 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set foldlevel=1
 set foldcolumn=4
-"highlight Folded guifg=ivory3
-highlight Folded guifg=NONE
+highlight Folded guifg=grey65
 autocmd BufReadPost,FileReadPost * normal zX
 "set nofoldenable
 
+""
+" Go
+""
+" Neotest
+autocmd FileType go nnoremap <leader>ta <cmd>lua require('neotest').run.attach()<cr>
+autocmd FileType go nnoremap <leader>ts <cmd>lua require('neotest').summary.toggle()<cr>
+autocmd FileType go nnoremap <leader>to <cmd>lua require('neotest').output.open({ enter = true })<cr>
+autocmd FileType go nnoremap <leader>tS <cmd>lua require('neotest').run.stop()<cr>
+autocmd FileType go nnoremap <leader>tf <cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>
+autocmd FileType go nnoremap <leader>tn <cmd>lua require('neotest').run.run()<cr>
+" tags
+autocmd FileType go nmap gta :CocCommand go.tags.add.prompt<cr>
+autocmd FileType go nmap gtc :CocCommand go.tags.clear<cr>
 
-let g:go_doc_popup_window = 1
-let g:go_auto_sameids = 1
-
+""
+"" Vimspector
+""
 nmap <leader>dd :call vimspector#Launch()<CR>
 nmap <leader>dx :VimspectorReset<CR>
 nmap <leader>de :VimspectorEval
@@ -207,6 +223,7 @@ nmap <leader>dw :VimspectorWatch
 nmap <leader>do :VimspectorShowOutput
 let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB' ]
 let g:vimspector_enable_mappings = 'HUMAN'
+
 
 ""
 "" Telescop searching
@@ -217,18 +234,20 @@ nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
-" Neotest
-nnoremap <leader>ta <cmd>lua require('neotest').run.attach()<cr>
-nnoremap <leader>ts <cmd>lua require('neotest').summary.toggle()<cr>
-nnoremap <leader>to <cmd>lua require('neotest').output.open({ enter = true })<cr>
-nnoremap <leader>tS <cmd>lua require('neotest').run.stop()<cr>
-nnoremap <leader>tf <cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>
-nnoremap <leader>tn <cmd>lua require('neotest').run.run()<cr>
+
+
 
 ""
 "" Coc settings
 ""
 inoremap <silent><expr> <c-space> coc#refresh()
+nmap <leader>cl <Plug>(coc-codelens-action)
+nmap <leader>rn <Plug>(coc-rename)
+" GoTo code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable
@@ -245,13 +264,6 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " <C-g>u breaks current undo, please make your own choice
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" GoTo code navigation
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent><nowait> <space>g <Plug>(coc-codelens-action)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
