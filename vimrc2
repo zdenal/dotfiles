@@ -8,6 +8,8 @@ call plug#begin('~/.vim/plugged2')
   Plug 'nvim-tree/nvim-tree.lua'
   Plug 'simeji/winresizer'
 
+  Plug 'stevearc/aerial.nvim'
+
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'easymotion/vim-easymotion'
   Plug 'neovim/nvim-lspconfig'
@@ -39,22 +41,32 @@ call plug#begin('~/.vim/plugged2')
     "go.goplsOptions": {
       "usePlaceholders": true,
       "completeUnimported": true,
+      "analyses": {
+        "unusedparams": true
+      "},
+      "codelenses": {
+        "gc_details": true,
+        "generate": true,
+        "test": true,
+        "tidy": true,
+        "upgrade_dependency": true
+      "},
       "hints": {
-        "assignVariableTypes": true,
+        "assignVariableTypes": false,
         "compositeLiteralTypes": true,
         "compositeLiteralFields": true,
         "functionTypeParameters": true,
-        "parameterNames": true,
+        "parameterNames": false,
         "constantValues": true,
         "rangeVariableTypes": true
       "}
     "},
     "rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": true,
     "typescript.inlayHints.parameterNames.enabled": 'all',
-    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.parameterTypes.enabled": false,
     "typescript.inlayHints.variableTypes.enabled": true,
     "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": false,
     "typescript.inlayHints.enumMemberValues.enabled": true,
     "javascript.inlayHints.parameterNames.enabled": 'all',
     "javascript.inlayHints.parameterTypes.enabled": true,
@@ -63,8 +75,6 @@ call plug#begin('~/.vim/plugged2')
     "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
     "javascript.inlayHints.enumMemberValues.enabled": true
   "}
-
-
 
   Plug 'antoinemadec/FixCursorHold.nvim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -134,24 +144,34 @@ lua << EOF
       additional_vim_regex_highlighting = false,
     }
   }
+
+  require("aerial").setup({
+    -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+    on_attach = function(bufnr)
+      -- Jump forwards/backwards with '{' and '}'
+      vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+      vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+    end,
+  })
 EOF
 
 let mapleader = ","
 
 map <Leader>n :NvimTreeToggle<CR>
+map <Leader>m :AerialToggle!<CR>
 map <Leader>w :WinResizerStartResize<CR>
 
-" Disable Ex mode
+"" Disable Ex mode
 nnoremap Q <Nop>
 nnoremap H gT
 nnoremap L gt
 
-set number            " Show line numbers
-set ruler             " Show line and column number
-set cursorline              " Highlight current line
-set scrolloff=5             " Start scrolling n lines before horizontal border of window.
-set sidescrolloff=7         " Start scrolling n chars before end of screen.
-set sidescroll=1            " The minimal number of columns to scroll
+set number            "" Show line numbers
+set ruler             "" Show line and column number
+set cursorline              "" Highlight current line
+set scrolloff=5             "" Start scrolling n lines before horizontal border of window.
+set sidescrolloff=7         "" Start scrolling n chars before end of screen.
+set sidescroll=1            "" The minimal number of columns to scroll
 set clipboard^=unnamed,unnamedplus
 
 ""
@@ -169,12 +189,12 @@ map <silent> <leader>mp :<C-u>CocCommand markdown-preview-enhanced.openPreview<C
 ""
 "" Whitespace
 ""
-set nowrap                        " don't wrap lines
-set tabstop=2                     " a tab is two spaces
-set shiftwidth=2                  " an autoindent (with <<) is two spaces
-set expandtab                     " use spaces, not tabs
-"set list                         " Show invisible characters (eg. tabs as '>')
-set backspace=indent,eol,start    " backspace through everything in insert mode
+set nowrap                        "" don't wrap lines
+set tabstop=2                     "" a tab is two spaces
+set shiftwidth=2                  "" an autoindent (with <<) is two spaces
+set expandtab                     "" use spaces, not tabs
+"set list                         "" Show invisible characters (eg. tabs as '>')
+set backspace=indent,eol,start    "" backspace through everything in insert mode
 
 
 ""
@@ -193,9 +213,9 @@ hi CocInlayHint guifg=grey40
 "" tree-sitter -- folding options
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
-set foldlevel=1
+set foldlevel=5
 set foldcolumn=4
-highlight Folded guifg=grey65
+highlight Folded guifg=grey85
 autocmd BufReadPost,FileReadPost * normal zX
 "set nofoldenable
 
@@ -241,7 +261,8 @@ nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 "" Coc settings
 ""
 inoremap <silent><expr> <c-space> coc#refresh()
-nmap <leader>cl <Plug>(coc-codelens-action)
+nmap <leader>la <Plug>(coc-codelens-action)
+nmap <leader>ll <Plug>(coc-codeaction-source)
 nmap <leader>rn <Plug>(coc-rename)
 " GoTo code navigation
 nmap <silent> gd <Plug>(coc-definition)
@@ -276,6 +297,6 @@ function! ShowDocumentation()
   endif
 endfunction
 
-" Highlight the symbol and its references when holding the cursor
+" nighlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
