@@ -1,13 +1,21 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/zdenko/.oh-my-zsh
+export ZSH=/Users/zdenal/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+#ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -51,10 +59,12 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git asdf zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git asdf zsh-autosuggestions zsh-syntax-highlighting gcloud)
 
 source $ZSH/oh-my-zsh.sh
+eval "$(zoxide init zsh)"
 
+eval "$(navi widget zsh)"
 
 # User configuration
 
@@ -98,18 +108,28 @@ alias projects="cd ~/Projects"
 alias rust="cd ~/Projects/rust"
 alias dotfiles="cd ~/Projects/dotfiles"
 
-export PATH=$HOME/.utrust-cli/bin:$PATH
-export EDITOR=nvim
+alias ls="colorls -A"
+alias cdi="zi"
 
-source $HOME/.cargo/env
+export EDITOR=nvim
+export KERL_BUILD_DOCS=yes
+export GEM_HOME="$HOME/.gem"
 
 eval "$(direnv hook zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH="/Users/zdenko/elrondsdk:$PATH"	# elrond-sdk
-export PATH=$PATH:/Users/zdenko/.zokrates/bin
+export PATH="/Users/zdenal/elrondsdk:$PATH"	# elrond-sdk
+export PATH=$PATH:/Users/zdenal/.zokrates/bin
+export PATH=$PATH:/Users/zdenal/projects/synq/cloud/bin
+export PATH=$PATH:/Users/zdenal/.local/bin
+export PATH=$PATH:$(ruby -e 'puts Gem.bindir')
+#export GOPATH=/Users/zdenal/.asdf/shims/go
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+source $(dirname $(gem which colorls))/tab_complete.sh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
