@@ -10,6 +10,11 @@ call plug#begin('~/.vim/plugged2')
 
   Plug 'stevearc/aerial.nvim'
 
+  "folding
+  Plug 'kevinhwang91/nvim-ufo'
+  Plug 'kevinhwang91/promise-async'
+  Plug 'Yggdroot/indentLine'
+
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'easymotion/vim-easymotion'
   Plug 'neovim/nvim-lspconfig'
@@ -143,6 +148,7 @@ lua << EOF
     }
   }
 
+  require('ufo').setup()
   require("nvim-tree").setup()
   require("nvim-autopairs").setup {}
   require("noice").setup()
@@ -237,8 +243,9 @@ hi CocInlayHint guifg=grey40
 "" tree-sitter -- folding options
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
-set foldlevel=5
-set foldcolumn=4
+set foldlevel=99
+set foldcolumn=0
+
 highlight Folded guifg=grey85
 autocmd BufReadPost,FileReadPost * normal zX
 "set nofoldenable
