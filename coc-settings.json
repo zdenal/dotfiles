@@ -1,0 +1,42 @@
+{
+  "codeLens.enable": true,
+  "diagnostic.checkCurrentLine": true,
+  "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
+  "coc.preferences.formatOnSave": true,
+  "snippets.ultisnips.pythonPrompt": false,
+  "go.goplsOptions": {
+    "usePlaceholders": true,
+    "completeUnimported": true,
+    "analyses": {
+      "unusedparams": true
+    },
+    "codelenses": {
+      "gc_details": true,
+      "generate": true,
+      "test": true,
+      "tidy": true,
+      "upgrade_dependency": true
+    },
+    "hints": {
+      "assignVariableTypes": false,
+      "compositeLiteralTypes": true,
+      "compositeLiteralFields": true,
+      "functionTypeParameters": true,
+      "parameterNames": false,
+      "constantValues": true,
+      "rangeVariableTypes": true
+    }
+  },
+  "rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": true,
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterTypes.enabled": false,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": false,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "javascript.inlayHints.parameterTypes.enabled": true,
+  "javascript.inlayHints.variableTypes.enabled": true,
+  "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.inlayHints.enumMemberValues.enabled": true
+}
