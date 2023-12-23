@@ -1,0 +1,2 @@
+- https://github.com/ajeetdsouza/zoxide
+- https://github.com/romkatv/powerlevel10k
