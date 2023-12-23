@@ -31,55 +31,12 @@ call plug#begin('~/.vim/plugged2')
   Plug 'nvim-neotest/neotest'
 
 
+  " Coc
   " Use release branch (recommended)
   " coc-prettier, coc-git, coc-json, coc-elixir, coc-rls, coc-snippets,
   " coc-webview, coc-markdown-preview-enhanced, coc-go
   " coc-tsserver, coc-json, coc-rust-analyzer, coc-tailwindcss3
   "
-  " Coc config
-  "
-  "
-  "{
-    "elixir.pathToElixirLS": '~/.elixir-ls/release/language_server.sh',
-    "coc.preferences.formatOnSave": true,
-    "snippets.ultisnips.pythonPrompt": false,
-    "go.goplsOptions": {
-      "usePlaceholders": true,
-      "completeUnimported": true,
-      "analyses": {
-        "unusedparams": true
-      "},
-      "codelenses": {
-        "gc_details": true,
-        "generate": true,
-        "test": true,
-        "tidy": true,
-        "upgrade_dependency": true
-      "},
-      "hints": {
-        "assignVariableTypes": false,
-        "compositeLiteralTypes": true,
-        "compositeLiteralFields": true,
-        "functionTypeParameters": true,
-        "parameterNames": false,
-        "constantValues": true,
-        "rangeVariableTypes": true
-      "}
-    "},
-    "rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": true,
-    "typescript.inlayHints.parameterNames.enabled": 'all',
-    "typescript.inlayHints.parameterTypes.enabled": false,
-    "typescript.inlayHints.variableTypes.enabled": true,
-    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-    "typescript.inlayHints.functionLikeReturnTypes.enabled": false,
-    "typescript.inlayHints.enumMemberValues.enabled": true,
-    "javascript.inlayHints.parameterNames.enabled": 'all',
-    "javascript.inlayHints.parameterTypes.enabled": true,
-    "javascript.inlayHints.variableTypes.enabled": true,
-    "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
-    "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
-    "javascript.inlayHints.enumMemberValues.enabled": true
-  "}
 
   Plug 'antoinemadec/FixCursorHold.nvim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -91,6 +48,8 @@ call plug#begin('~/.vim/plugged2')
   Plug 'nvim-neotest/neotest-go'
 
   "" debugging
+  " for golang do
+  " :VimspectorInstall delve 
   Plug 'puremourning/vimspector'
 
 
