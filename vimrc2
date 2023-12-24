@@ -13,7 +13,6 @@ call plug#begin('~/.vim/plugged2')
   "folding
   Plug 'kevinhwang91/nvim-ufo'
   Plug 'kevinhwang91/promise-async'
-  Plug 'Yggdroot/indentLine'
 
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'easymotion/vim-easymotion'
@@ -29,6 +28,7 @@ call plug#begin('~/.vim/plugged2')
   Plug 'vim-airline/vim-airline-themes'
   Plug 'windwp/nvim-autopairs'
   Plug 'nvim-neotest/neotest'
+  Plug 'lukas-reineke/indent-blankline.nvim'
 
 
   " Coc
@@ -48,8 +48,6 @@ call plug#begin('~/.vim/plugged2')
   Plug 'nvim-neotest/neotest-go'
 
   "" debugging
-  " for golang do
-  " :VimspectorInstall delve 
   Plug 'puremourning/vimspector'
 
 
@@ -106,6 +104,8 @@ lua << EOF
       }
     }
   }
+
+  require("ibl").setup({indent = {char = "┊"}, scope = {enabled = true, highlight = {"Function", "Label", "Whitespace", "NonText"}}})
 
   require('ufo').setup()
   require("nvim-tree").setup()
