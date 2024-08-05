@@ -36,19 +36,28 @@ call plug#begin('~/.vim/plugged2')
   " coc-prettier, coc-git, coc-json, coc-elixir, coc-rls, coc-snippets,
   " coc-webview, coc-markdown-preview-enhanced, coc-go
   " coc-tsserver, coc-json, coc-rust-analyzer, coc-tailwindcss3
-  "
+  " coc-go (run CocCommand go.install.tools)
+
+  Plug 'mrcjkb/rustaceanvim', {'ft': 'rust', 'version': '^4'}
 
   Plug 'antoinemadec/FixCursorHold.nvim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
   Plug 'elixir-editors/vim-elixir'
+  Plug 'williamboman/mason.nvim'
 
   "" Golang
   ""Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
   Plug 'nvim-neotest/neotest-go'
 
   "" debugging
-  Plug 'puremourning/vimspector'
+  Plug 'mfussenegger/nvim-dap'
+  Plug 'leoluz/nvim-dap-go'
+  Plug 'rcarriga/nvim-dap-ui'
+  Plug 'nvim-neotest/nvim-nio'
+  Plug 'theHamsta/nvim-dap-virtual-text'
+  Plug 'LiadOz/nvim-dap-repl-highlights'
+  Plug 'nvim-telescope/telescope-dap.nvim'
 
 
   "" syntax highligting
@@ -60,6 +69,7 @@ call plug#begin('~/.vim/plugged2')
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'nvim-telescope/telescope-live-grep-args.nvim', { 'do': 'make' }
 	Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.3' }
+  Plug 'sharkdp/fd'
 
   "" Theme
   Plug 'patstockwell/vim-monokai-tasty'
@@ -70,7 +80,7 @@ call plug#begin('~/.vim/plugged2')
   Plug 'rcarriga/nvim-notify'
   Plug 'MunifTanjim/nui.nvim'
 
-  Plug 'aduros/ai.vim'
+  Plug 'github/copilot.vim'
 call plug#end()
 
 lua << EOF
@@ -107,11 +117,32 @@ lua << EOF
 
   require("ibl").setup({indent = {char = "┊"}, scope = {enabled = true, highlight = {"Function", "Label", "Whitespace", "NonText"}}})
 
+  require('telescope').load_extension('dap')
+  require('dap-go').setup()
+  require('nvim-dap-repl-highlights').setup()
+  require("nvim-dap-virtual-text").setup()
+  require("dapui").setup()
+  local dap, dapui = require("dap"), require("dapui")
+  dap.listeners.before.attach.dapui_config = function()
+    dapui.open()
+  end
+  dap.listeners.before.launch.dapui_config = function()
+    dapui.open()
+  end
+  dap.listeners.before.event_terminated.dapui_config = function()
+    dapui.close()
+  end
+  dap.listeners.before.event_exited.dapui_config = function()
+    dapui.close()
+  end
+
+  require'lspconfig'.gopls.setup{}
+  require("mason").setup()
   require('ufo').setup()
   require("nvim-tree").setup()
   require("nvim-autopairs").setup {}
   require("noice").setup()
-  require("notify").setup {top_down = true, stages = "static", timeout=2000, render="compact"}
+  require("notify").setup {top_down = true, stages = "static", timeout=5000, render="compact"}
   require("neotest").setup({
     adapters = {
       require("neotest-go")({
@@ -215,25 +246,14 @@ autocmd BufReadPost,FileReadPost * normal zX
 " Neotest
 autocmd FileType go nnoremap <leader>ta <cmd>lua require('neotest').run.attach()<cr>
 autocmd FileType go nnoremap <leader>ts <cmd>lua require('neotest').summary.toggle()<cr>
-autocmd FileType go nnoremap <leader>to <cmd>lua require('neotest').output.open({ enter = true })<cr>
+autocmd FileType go nnoremap <leader>to <cmd>lua require('neotest').output_panel.toggle()<cr>
+autocmd FileType go nnoremap <leader>tc <cmd>lua require('neotest').output_panel.clear()<cr>
 autocmd FileType go nnoremap <leader>tS <cmd>lua require('neotest').run.stop()<cr>
 autocmd FileType go nnoremap <leader>tf <cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>
 autocmd FileType go nnoremap <leader>tn <cmd>lua require('neotest').run.run()<cr>
 " tags
 autocmd FileType go nmap gta :CocCommand go.tags.add.prompt<cr>
 autocmd FileType go nmap gtc :CocCommand go.tags.clear<cr>
-
-""
-"" Vimspector
-""
-nmap <leader>dd :call vimspector#Launch()<CR>
-nmap <leader>dx :VimspectorReset<CR>
-nmap <leader>de :VimspectorEval
-nmap <leader>dw :VimspectorWatch
-nmap <leader>do :VimspectorShowOutput
-let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-go', 'CodeLLDB', 'delve' ]
-let g:vimspector_enable_mappings = 'HUMAN'
-
 
 ""
 "" Telescop searching
@@ -246,6 +266,11 @@ nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 
+""
+"" Debugging DAP
+""
+nnoremap <leader>db <cmd>lua require('dap').toggle_breakpoint()<cr>
+nnoremap <leader>dc <cmd>lua require('dap').continue()<cr>
 
 
 ""
