@@ -1,0 +1,63 @@
+{
+  "window.commandCenter": true,
+  "editor.codeActionsOnSave": {},
+  "vim.easymotion": true,
+  "vim.useSystemClipboard": true,
+  "vim.leader": ",",
+  "vim.foldfix": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["leader", "n"],
+      "commands": ["workbench.action.toggleSidebarVisibility"],
+      "when": "sideBarVisible == true"
+    },
+    {
+      "before": ["leader", "n"],
+      "commands": ["workbench.view.explorer"],
+      "when": "sideBarVisible == false"
+    },
+    {
+      "before": ["leader", "c", "i"],
+      "commands": ["editor.action.commentLine"]
+    }
+  ],
+  "editor.fontSize": 15,
+  "git.openRepositoryInParentFolders": "always",
+  "editor.stickyScroll.enabled": true,
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.implementationsCodeLens.showOnInterfaceMethods": true,
+  "debug.console.fontSize": 14,
+  "terminal.integrated.fontSize": 14,
+  "chat.editor.fontSize": 14,
+  "workbench.tree.stickyScrollMaxItemCount": 5,
+  "editor.stickyScroll.defaultModel": "foldingProviderModel",
+  "scm.inputFontSize": 14,
+  "workbench.colorCustomizations": {
+    "editorStickyScroll.background": "#504646" // Change to your desired color code
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.go$",
+        "cmd": "golines ${file} -m 128 -w"
+      }
+    ]
+  },
+  "playwright.reuseBrowser": false,
+  "playwright.env": {
+    "TEST_AUTH0_USERNAME": "cypres@synq.io",
+    "TEST_AUTH0_PASSWORD": "Cx7jZPNkPj$ar@T"
+  },
+  "playwright.showTrace": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cursor.cpp.enablePartialAccepts": true
+}

@@ -1,0 +1,16 @@
+FaroSystemAppender constructor
+alefragnani.project-manager
+eamodio.gitlens
+emeraldwalk.runonsave
+esbenp.prettier-vscode
+galkowskit.go-interface-annotations
+golang.go
+infeng.vscode-react-typescript
+ms-playwright.playwright
+pkief.material-icon-theme
+rust-lang.rust-analyzer
+usernamehw.errorlens
+vscodevim.vim
+wmaurer.vscode-jumpy
+zhang-renyang.vscode-react
+zxh404.vscode-proto3
