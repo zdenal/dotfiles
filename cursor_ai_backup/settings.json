@@ -52,8 +52,8 @@
   },
   "playwright.reuseBrowser": false,
   "playwright.env": {
-    "TEST_AUTH0_USERNAME": "cypres@synq.io",
-    "TEST_AUTH0_PASSWORD": "Cx7jZPNkPj$ar@T"
+    "TEST_AUTH0_USERNAME": "",
+    "TEST_AUTH0_PASSWORD": ""
   },
   "playwright.showTrace": false,
   "[typescriptreact]": {
