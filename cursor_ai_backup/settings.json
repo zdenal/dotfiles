@@ -1,6 +1,9 @@
 {
   "window.commandCenter": true,
+  "window.zoomLevel": 0.6,
+  "editor.fontSize": 14,
   "editor.codeActionsOnSave": {},
+  "editor.stickyScroll.enabled": true,
   "vim.easymotion": true,
   "vim.useSystemClipboard": true,
   "vim.leader": ",",
@@ -21,14 +24,12 @@
       "commands": ["editor.action.commentLine"]
     }
   ],
-  "editor.fontSize": 15,
   "git.openRepositoryInParentFolders": "always",
-  "editor.stickyScroll.enabled": true,
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.implementationsCodeLens.showOnInterfaceMethods": true,
   "debug.console.fontSize": 14,
   "terminal.integrated.fontSize": 14,
-  "chat.editor.fontSize": 14,
+  "chat.editor.fontSize": 15,
   "workbench.tree.stickyScrollMaxItemCount": 5,
   "editor.stickyScroll.defaultModel": "foldingProviderModel",
   "scm.inputFontSize": 14,
@@ -46,7 +47,7 @@
     "commands": [
       {
         "match": "\\.go$",
-        "cmd": "golines ${file} -m 128 -w"
+        "cmd": "golines ${file} -m 150 -w"
       }
     ]
   },
@@ -59,5 +60,14 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cursor.cpp.enablePartialAccepts": true
+  "cursor.cpp.enablePartialAccepts": true,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "svelte.enable-ts-plugin": true,
+  "git.autofetch": true,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "go.toolsManagement.autoUpdate": true
 }

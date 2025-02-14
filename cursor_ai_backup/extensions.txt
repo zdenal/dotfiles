@@ -1,14 +1,24 @@
-FaroSystemAppender constructor
+1yib.svelte-bundle
 alefragnani.project-manager
+ardenivanov.svelte-intellisense
+bradlc.vscode-tailwindcss
+dbaeumer.vscode-eslint
 eamodio.gitlens
 emeraldwalk.runonsave
 esbenp.prettier-vscode
+fivethree.vscode-svelte-snippets
 galkowskit.go-interface-annotations
 golang.go
+graphql.vscode-graphql
+graphql.vscode-graphql-syntax
 infeng.vscode-react-typescript
+ms-azuretools.vscode-docker
 ms-playwright.playwright
 pkief.material-icon-theme
 rust-lang.rust-analyzer
+ryuta46.multi-command
+shopify.polaris-for-vscode
+svelte.svelte-vscode
 usernamehw.errorlens
 vscodevim.vim
 wmaurer.vscode-jumpy
