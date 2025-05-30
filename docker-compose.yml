@@ -1,7 +1,7 @@
 version: "3.8"
 services:
-  db:
-    image: postgres:15.3-alpine3.18
+  postgres:
+    image: bitnami/postgresql:14
     restart: always
     environment:
       - POSTGRES_USER=postgres
@@ -10,15 +10,11 @@ services:
       - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+    networks:
+      - shared-network
 
   clickhouse:
-    image: clickhouse/clickhouse-server
+    image: clickhouse/clickhouse-server:24.3.2
     #environment:
     #- CLICKHOUSE_USER=clickhouse
     #- CLICKHOUSE_PASSWORD=clickhouse
@@ -26,6 +22,32 @@ services:
       - "127.0.0.1:8123:8123"
       - "127.0.0.1:9000:9000"
 
+  ssh_server:
+    image: linuxserver/openssh-server
+    ports:
+      - "2222:2222"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - USER_NAME=remoteuser
+      - PASSWORD_ACCESS=true
+      - USER_PASSWORD=testpass
+      - PUBLIC_KEY_FILE=/home/remoteuser/.ssh/ssh_test_rsa.pub
+      - LOG_STDOUT=true
+      - DOCKER_MODS=linuxserver/mods:openssh-server-ssh-tunnel
+    volumes:
+      - ~/.ssh/ssh_tunnel_test:/home/remoteuser/.ssh
+    depends_on:
+      - postgres
+      - clickhouse
+    networks:
+      - shared-network
+
 volumes:
   db:
     driver: local
+
+networks:
+  shared-network:
+    driver: bridge
